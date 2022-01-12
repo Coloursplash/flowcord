@@ -1,2 +1,3 @@
 # flowcord
- A powerful Discord client focusing on features and beauty.
+
+A powerful Discord client focusing on features and beauty.

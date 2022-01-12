@@ -1,0 +1,22 @@
+{
+  "name": "flowcord",
+  "version": "0.1.0",
+  "description": "A powerful Discord client focusing on features and beauty.",
+  "main": "index.js",
+  "scripts": {
+    "flow": "node injector/index.js inject",
+    "unflow": "node injector/index.js inject",
+    "inject": "node injector/index.js inject",
+    "uninject": "node injector/index.js uninject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Coloursplash/flowcord.git"
+  },
+  "author": "Coloursplash",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Coloursplash/flowcord/issues"
+  },
+  "homepage": "https://github.com/Coloursplash/flowcord#readme"
+}
