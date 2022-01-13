@@ -14,40 +14,37 @@ try {
   }
 }
 
-// Discord version
-const readlineInterface = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-})
-var discordType
-console.log(process.argv[2] === 'inject' ? 'Which version of Discord should Flowcord inject into?' : 'Which version of Discord should Flowcord uninject into?');
+(async () => {
+  // Discord version
+  const readlineInterface = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+  console.log(process.argv[2] === 'inject' ? InjectorMessages.INJECT_VERSION : InjectorMessages.UNINJECT_VERSION);
+  const askDiscordType = () => new Promise(resolve => readlineInterface.question('> ', resolve));
+  console.log('1. Discord');
+  console.log('2. Discord Canary');
+  console.log('3. DiscordPTB');
+  discordType = await askDiscordType();
+  readlineInterface.close();
 
-const discordType = () => new Promise(resolve => readlineInterface.question('> ', resolve));
-console.log('1. Discord');
-console.log('2. Discord Canary');
-console.log('3. DiscordPTB');
-await discordType();
-readlineInterface.close();
+  switch (discordType) {
+    case '1':
+      discordType = 'Discord';
+      break;
+    case '2':
+      discordType = 'DiscordCanary';
+      break;
+    case '3':
+      discordType = 'DiscordPTB';
+      break;
+    default:
+      console.log(InjectorMessages.INVALID_DISCORD_INSTALLATION);
+      process.exit(process.argv.includes('--no-exit-codes') ? 0 : 1);
+  };
 
-switch (discordType) {
-  case '1':
-    discordType = 'Discord';
-    break;
-  case '2':
-    discordType = 'DiscordCanary';
-    break;
-  case '3':
-    discordType = 'DiscordPTB';
-    break;
-  default:
-    console.log('Invalid Discord installation');
-    console.log('Make sure the Discord installation you enter is in the list AND installed on your computer.')
-    process.exit(process.argv.includes('--no-exit-codes') ? 0 : 1);
-};
-        
-console.log('');
+  console.log('');
 
-try {
   if (process.argv[2] === 'inject') {
     if (main.inject(discordType, platformModule)) {
       console.log(InjectorMessages.INJECT_SUCCESS);
@@ -59,7 +56,7 @@ try {
       console.log(InjectorMessages.UNSUPPORTED_ARGUMENT);
     }
   }
-} catch(err) {
+})().catch(err => {
   if (err.code === 'EACCES') {
     console.log(process.argv[2] === 'inject' ? InjectorMessages.INJECT_FAILED : InjectorMessages.UNINJECT_FAILED, '\n');
     console.log(InjectorMessages.MISSING_PERMISSIONS);
@@ -67,4 +64,4 @@ try {
   } else {
     console.log('Something interesting happened', err);
   }
-}
+});
