@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "flow": "node injector/index.js inject",
-    "unflow": "node injector/index.js inject",
     "inject": "node injector/index.js inject",
     "uninject": "node injector/index.js uninject"
   },
