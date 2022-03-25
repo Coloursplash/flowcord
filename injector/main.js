@@ -1,52 +1,71 @@
-const { existsSync, mkdir, writeFile } = require('fs');
-const { join } = require('path');
-const { InjectorMessages } = require('./i18n');
+/**
+ * Copyright (c) 2018-2020 aetheryx & Bowser65
+ * All Rights Reserved. Licensed under the Porkord License
+ * https://powercord.dev/porkord-license
+ */
 
-const inject = (discordType, { getAppDir }) => {
-  const appDir = getAppDir(discordType);
-  const appDir = getAppDir(discordType);
+const {
+  existsSync
+} = require('fs');
+const {
+  mkdir,
+  writeFile,
+  readdir,
+  lstat,
+  unlink,
+  rmdir
+} = require('fs').promises;
+const {
+  join,
+  sep
+} = require('path');
+const {
+  InjectorMessages
+} = require('./i18n');
+
+exports.inject = async (discordType, {
+  getAppDir
+}) => {
+  const appDir = await getAppDir(discordType);
   if (existsSync(appDir)) {
     console.log(InjectorMessages.INJECTOR_ALREADY_INSTALLED);
     return false;
   }
 
   await mkdir(appDir);
-  writeFile(
-    join(appDir, 'index.js'),
-    `require(\`${__dirname.replace(RegExp(sep.repeat(2), 'g'), '/')}/../src/index.js\`)`
-  )
-  console.log(InjectorMessages.WRITE_INDEX_SUCCESS);
-  
-  writeFile(
-    join(appDir, 'package.json'),
-    JSON.stringify({
-      name: 'flowcord', // TODO: try with name as flowcord and discord to see which work
-      main: 'index.js'
-    })
-  )
-  console.log(InjectorMessages.WRITE_PACKAGE_SUCCESS);
+  await Promise.all([writeFile(
+      join(appDir, 'index.js'),
+      `require(\`${__dirname.replace(RegExp(sep.repeat(2), 'g'), '/')}/../src/index.js\`)`),
+    console.log(InjectorMessages.WRITE_INDEX_SUCCESS),
+    writeFile(
+      join(appDir, 'package.json'),
+      JSON.stringify({
+        main: 'index.js',
+        name: 'discord'
+      })),
+    console.log(InjectorMessages.WRITE_PACKAGE_SUCCESS)
+  ]);
 
   console.log('');
 
   return true;
 }
 
-const uninject = (discordType, { getAppDir }) => {
-  const appDir = getAppDir(discordType);
+exports.uninject = async (discordType, {
+  getAppDir
+}) => {
+  const appDir = await getAppDir(discordType);
+
   if (!existsSync(appDir)) {
     console.log(InjectorMessages.INJECTOR_ALREADY_UNINSTALLED);
     return false;
   }
 
-  rmdirRf(appDir);
-
+  await rmdirRf(appDir);
   return true;
 }
 
-const { existsSync } = require('fs');
-const { readdir, lstat, unlink, rmdir } = require('fs').promises;
-
-const rmdirRf = (path) => {
+const rmdirRf = async (path) => {
   if (existsSync(path)) {
     const files = await readdir(path);
     for (const file of files) {
@@ -54,13 +73,11 @@ const rmdirRf = (path) => {
       const stat = await lstat(curPath);
 
       if (stat.isDirectory()) {
-        await rmdirRf(curPath);
+        rmdirRf(curPath);
       } else {
-        await unlink(curPath);
+        unlink(curPath);
       }
     }
-    await rmdir(path);
+    rmdir(path);
   }
-};
-
-module.exports = { inject, uninject };
+}

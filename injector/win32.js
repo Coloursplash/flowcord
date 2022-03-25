@@ -1,7 +1,11 @@
-const { readdir } = require('fs').promises;
-const { join } = require('path');
+const {
+  readdir
+} = require('fs').promises;
+const {
+  join
+} = require('path');
 
-getAppDir = async (discordType) => {
+exports.getAppDir = async (discordType) => {
   const discordPath = join(process.env.LOCALAPPDATA, discordType);
   const discordDirectory = await readdir(discordPath);
 
@@ -11,5 +15,3 @@ getAppDir = async (discordType) => {
 
   return join(discordPath, currentBuild, 'resources', 'app');
 };
-
-exports = getAppDir;

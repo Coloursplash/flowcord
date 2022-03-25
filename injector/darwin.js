@@ -1,4 +1,4 @@
-getAppDir = (discordType) => {
+exports.getAppDir = async (discordType) => {
   if (discordType === 'Discord') {
     return '/Applications/Discord.app/Contents/Resources/app';
   } else if (discordType === 'DiscordCanary') {
@@ -7,5 +7,3 @@ getAppDir = (discordType) => {
     return '/Applications/Discord PTB.app/Contents/Resources/app';
   }
 }
-
-exports = getAppDir;

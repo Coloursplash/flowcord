@@ -39,7 +39,7 @@ const knownLinuxPTBPaths = Object.freeze([
   `${homedir}/.local/bin/DiscordPTB`
 ]);
 
-getAppDir = async (discordType) => {
+exports.getAppDir = async (discordType) => {
   if (discordType === 'DiscordCanary') {
     const discordProcess = execSync('ps x')
       .toString()
@@ -144,5 +144,3 @@ getAppDir = async (discordType) => {
     return join('/', ...discordPath, 'resources', 'app');
   }
 }
-
-exports = getAppDir;

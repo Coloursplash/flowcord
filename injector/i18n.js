@@ -17,7 +17,7 @@ const InjectorMessages = Object.freeze({
   LINUX_INVALID_PATH: 'The path you provided is invalid.',
   MISSING_PERMISSIONS: 'Flowcord wasn\'t able to inject due to missing permissions.\nTry again with elevated permissions.',
   UNINJECT_FAILED: `${AnsiEscapes.BOLD}${AnsiEscapes.RED}Failed to uninject Flowcord :(${AnsiEscapes.RESET}`,
-  UNINJECT_SUCCESS: `${AnsiEscapes.BOLD}${AnsiEscapes.GREEN}Flowcord has been successfully uninjected.\n$Now fully restart the Discord client through the system tray or task manager.{AnsiEscapes.RESET}`,
+  UNINJECT_SUCCESS: `${AnsiEscapes.BOLD}${AnsiEscapes.GREEN}Flowcord has been successfully uninjected.\nNow fully restart the Discord client through the system tray or task manager.${AnsiEscapes.RESET}`,
   UNINJECT_VERSION: 'Which version of Discord should Flowcord uninject from?',
   UNSUPPORTED_PLATFORM: `It seems like your platform is not supported yet.\nFeel free to open an issue about it so we can add support for it!\nMake sure you mention the platform you are on is "${process.platform}" in your issue.\nhttps://github.com/Coloursplash/flowcord/issues/new`,
   UNSUPPORTED_ARGUMENT: `Unsupported argument "${process.argv[2]}", exiting.`,
