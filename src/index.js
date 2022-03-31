@@ -8,26 +8,29 @@ const discordPath = join(dirname(require.main.filename), '..', 'app.asar');
 require.main.filename = join(discordPath, 'app_bootstrap/index.js');
 const discordPackage = require(join(discordPath, 'package.json'));
 
+// Global colour hex code used for all console functions
+global.consoleColor = '#7289da';
+
 if (!process.argv.includes('--vanilla')) {
   console.log('Hello from Powercord!');
-  
+
   // Reassign electron using proxy to avoid the onReady issue, thanks Powercord!
   const newElectron = new Proxy(electron, {
     get(target, prop) {
       switch (prop) {
         case 'BrowserWindow':
           return PatchedBrowserWindow;
-          default:
-            return target[prop];
-          }
-        }
-      });
-      const electronPath = require.resolve("electron");
-      delete require.cache[electronPath].exports; // If it didn't work, try to delete existing
-      require.cache[electronPath].exports = newElectron; // Try to assign again after deleting
+        default:
+          return target[prop];
+      }
+    }
+  });
+  const electronPath = require.resolve("electron");
+  delete require.cache[electronPath].exports; // If it didn't work, try to delete existing
+  require.cache[electronPath].exports = newElectron; // Try to assign again after deleting
 
-      electron.app.setAppPath(discordPath);
-      electron.app.name = discordPackage.name;
+  electron.app.setAppPath(discordPath);
+  electron.app.name = discordPackage.name;
 }
 
 // Use Discord's info to run the app
