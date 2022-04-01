@@ -1,19 +1,21 @@
-const {
-  join
-} = require('path');
+const { join } = require('path');
 const PluginManager = require('./managers/plugins');
+const APIManager = require('./managers/apis');
 
 /**
  * @property { SettingsAPI } settings
  * 
  * @type {Flowcord}
  * @property {PluginManager} pluginManager
+ * @property {APIManager} apiManager
  */
 class Flowcord extends Updatable {
   constructor() {
     super(join(__dirname, '..', '..'), '', 'flowcord');
 
+    this.api = {}
     this.pluginManager = new PluginManager();
+    this.apiManager = new APIManager();
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => this.init());
@@ -29,6 +31,10 @@ class Flowcord extends Updatable {
   }
 
   async startup() {
+    // APIs
+    this.apiManager.startAPIs();
+
+    // Plugins
     this.pluginManager.startPlugins();
 
     this.initialized = true;

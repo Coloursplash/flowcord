@@ -8,9 +8,6 @@ const discordPath = join(dirname(require.main.filename), '..', 'app.asar');
 require.main.filename = join(discordPath, 'app_bootstrap/index.js');
 const discordPackage = require(join(discordPath, 'package.json'));
 
-// Global colour hex code used for all console functions
-global.consoleColor = '#7289da';
-
 if (!process.argv.includes('--vanilla')) {
   console.log('Hello from Powercord!');
 
