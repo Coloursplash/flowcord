@@ -11,4 +11,6 @@ if (process.platform === 'darwin' && !process.env.PATH.includes('/usr/local/bin'
   process.env.PATH += ':/usr/local/bin';
 }
 
+document.body.classList.add("flowcord")
+
 setTimeout(() => DiscordNative.window.setDevtoolsCallbacks(null, null), 5e3);

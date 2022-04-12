@@ -22,7 +22,7 @@ const InjectorMessages = Object.freeze({
   UNSUPPORTED_PLATFORM: `It seems like your platform is not supported yet.\nFeel free to open an issue about it so we can add support for it!\nMake sure you mention the platform you are on is "${process.platform}" in your issue.\nhttps://github.com/Coloursplash/flowcord/issues/new`,
   UNSUPPORTED_ARGUMENT: `Unsupported argument "${process.argv[2]}", exiting.`,
   WRITE_INDEX_SUCCESS: '✅ Wrote index.js.',
-  WRITE_PACKAGE_SUCCESS: '✅ Wrote package.json'
+  WRITE_PACKAGE_SUCCESS: '✅ Wrote package.json.'
 });
 
 module.exports = { InjectorMessages };
